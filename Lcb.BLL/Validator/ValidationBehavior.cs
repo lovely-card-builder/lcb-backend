@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Espa.BLL.Validator;
+namespace Lcb.BLL.Validator;
 
 //all validators must ne inherited from abstract  AbstractValidator<TValidator>
 

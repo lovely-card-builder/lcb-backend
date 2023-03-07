@@ -1,6 +1,7 @@
 using Espa.BLL.Validator;
 using FluentValidation;
 using Lcb.BLL;
+using Lcb.BLL.Validator;
 using Lcb.Web.Middlewares;
 using MediatR;
 using Template.Infrastructure;
