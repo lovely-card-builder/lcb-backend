@@ -3,9 +3,29 @@ using Lcb.Web.Middlewares;
 using Template.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder();
+
+
+builder.Host
+    .UseSerilog(
+        (builderContext, config) =>
+        {
+            config
+                .MinimumLevel.Information()
+                .Enrich.FromLogContext()
+                .WriteTo.Seq("http://seq")
+                .ReadFrom.Configuration(builderContext.Configuration)
+                .WriteTo.Console();
+        }
+    );
+
+
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+builder.Logging.AddSerilog(dispose: true);
 
 builder.Services.AddCors();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -18,8 +38,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Template API",
-        Description = "Template API"
+        Title = "LCB API",
+        Description = "LCB API"
     });
 });
 

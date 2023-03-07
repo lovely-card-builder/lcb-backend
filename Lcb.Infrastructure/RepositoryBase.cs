@@ -5,9 +5,9 @@ namespace Template.Infrastructure;
 public class RepositoryBase<T> : IRepository<T>
     where T : class
 {
-    private readonly TemplateContext _context;
+    private readonly LcbContext _context;
 
-    public RepositoryBase(TemplateContext context)
+    public RepositoryBase(LcbContext context)
     {
         _context = context;
     }

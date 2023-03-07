@@ -7,12 +7,34 @@ networks:
     external: true
 
 services:
+  
+  outer-nginx:
+    container_name: outer-nginx
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    build:
+      context: .
+      dockerfile: ./nginx.Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - seq
+      - postgres_db
+    networks:
+      - default
+      - birdegop-net
+      
+  
   backend:
     container_name: backend
-    build: 
+    build:
       context: .
       dockerfile: ./Lcb.Web/Dockerfile
     environment:
+      TZ: "Europe/Moscow"
       ASPNETCORE_ConnectionStrings__MainDb: "Host=postgres_db;Port=5432;Username=postgres;Password=root;Database=Lcb;"
       ASPNETCORE_ENVIRONMENT: Development
     healthcheck:
@@ -21,20 +43,41 @@ services:
       timeout: 5s
       retries: 3
     restart: unless-stopped
+    ports:
+      - "5000:80"
     depends_on:
       - postgres_db
+      - seq
     networks:
       - default
       - birdegop-net
-
+  
   postgres_db:
     container_name: PostgreSQL
     image: "postgres:latest"
     environment:
+      TZ: "Europe/Moscow"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "root"
+    restart: unless-stopped
     volumes:
       - /home/egop/lcb/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - default
+      - birdegop-net
+
+  seq:
+    image: datalust/seq
     restart: unless-stopped
+    ports:
+      - "50505:80"
+    volumes:
+      - /home/egop/lcb/seq:/data
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_API_CANONICALURI: "http://localhost:50505"
+    networks:
+      - default
+      - birdegop-net

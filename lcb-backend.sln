@@ -5,6 +5,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildConfig", "BuildConfig", "{91EDC28F-6BDF-4855-999C-8418EB31CE51}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		nginx.Dockerfile = nginx.Dockerfile
+		nginx.conf = nginx.conf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lcb.Infrastructure", "Lcb.Infrastructure\Lcb.Infrastructure.csproj", "{0B53EAF8-63D3-47B0-9AAD-ABC401A62140}"

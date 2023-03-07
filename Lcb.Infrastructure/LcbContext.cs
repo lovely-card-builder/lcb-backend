@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Template.Infrastructure;
 
-public class TemplateContext : DbContext
+public class LcbContext : DbContext
 {
-    public TemplateContext()
+    public LcbContext()
     {
     }
 
-    public TemplateContext(DbContextOptions<TemplateContext> options) : base(options)
+    public LcbContext(DbContextOptions<LcbContext> options) : base(options)
     {
     }
 
