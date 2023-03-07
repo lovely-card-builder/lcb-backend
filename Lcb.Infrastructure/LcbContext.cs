@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Template.DAL.Models;
 
 namespace Template.Infrastructure;
 
@@ -8,6 +9,10 @@ public class LcbContext : DbContext
     public LcbContext()
     {
     }
+    
+    public DbSet<User> Users { get; set; }
+    
+    public DbSet<Postcard> Postcards { get; set; }
 
     public LcbContext(DbContextOptions<LcbContext> options) : base(options)
     {

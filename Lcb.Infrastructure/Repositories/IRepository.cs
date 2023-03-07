@@ -16,4 +16,5 @@ public interface IRepository<T>
     Task Delete(IEnumerable<T> entities);
 
     Task Delete(T entity);
+    Task SaveChanges(T entity);
 }
