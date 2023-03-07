@@ -10,6 +10,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder
             .HasKey(c => c.Id);
+
         builder
             .HasMany(x => x.Postcards)
             .WithOne(x => x.User)
