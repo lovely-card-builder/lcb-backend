@@ -1,0 +1,40 @@
+﻿version: "3"
+
+networks:
+  default:
+    driver: bridge
+  birdegop-net:
+    external: true
+
+services:
+  backend:
+    container_name: backend
+    build: 
+      context: .
+      dockerfile: ./Lcb.Web/Dockerfile
+    environment:
+      ASPNETCORE_ConnectionStrings__MainDb: "Host=postgres_db;Port=5432;Username=postgres;Password=root;Database=Lcb;"
+      ASPNETCORE_ENVIRONMENT: Development
+    healthcheck:
+      test: wget --no-verbose --tries=1 http://localhost/hc/check -qO- || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    depends_on:
+      - postgres_db
+    networks:
+      - default
+      - birdegop-net
+
+  postgres_db:
+    container_name: PostgreSQL
+    image: "postgres:latest"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+    volumes:
+      - /home/egop/lcb/pgdata:/var/lib/postgresql/data
+    networks:
+      - default
+    restart: unless-stopped
