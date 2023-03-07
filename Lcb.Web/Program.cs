@@ -1,5 +1,8 @@
+using Espa.BLL.Validator;
+using FluentValidation;
 using Lcb.BLL;
 using Lcb.Web.Middlewares;
+using MediatR;
 using Template.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
@@ -27,6 +30,7 @@ builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(LogLevel.Information);
 builder.Logging.AddSerilog(dispose: true);
 
+
 builder.Services.AddCors();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -45,6 +49,9 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDb(builder.Configuration);
 builder.Services.AddBLL();
+
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 // ---
 
 var app = builder.Build();

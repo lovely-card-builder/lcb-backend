@@ -16,19 +16,19 @@ public class PostcardController : LcbController
     }
 
     [HttpPost]
-    public async Task<ICollection<GetUserPostcardResponse>> Get(GetUserPostcardsRequest request, CancellationToken ct)
+    public async Task<ICollection<GetUserPostcardResponse>> GetAll([FromBody] GetUserPostcardsRequest request, CancellationToken ct)
     {
         return await _mediator.Send(request, ct);
     }
 
     [HttpPost]
-    public async Task<Unit> Get(AddUserPostcardRequest request, CancellationToken ct)
+    public async Task<Unit> GetById([FromBody] AddUserPostcardRequest request, CancellationToken ct)
     {
         return await _mediator.Send(request, ct);
     }
-    
+
     [HttpPost]
-    public async Task<Unit> Set(SetUserPostcardRequest request, CancellationToken ct)
+    public async Task<Unit> Set([FromBody] SetUserPostcardRequest request, CancellationToken ct)
     {
         return await _mediator.Send(request, ct);
     }
