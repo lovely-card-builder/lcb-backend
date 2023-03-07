@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Template.Infrastructure;
+namespace Lcb.Infrastructure.Repositories;
 
 public class RepositoryBase<T> : IRepository<T>
     where T : class

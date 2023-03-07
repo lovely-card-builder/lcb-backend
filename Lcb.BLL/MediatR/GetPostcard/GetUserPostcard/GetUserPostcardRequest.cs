@@ -1,7 +1,6 @@
-using Lcb.BLL.MediatR.GetUserPosrcards;
 using MediatR;
 
-namespace Lcb.BLL.MediatR.GetPostcard;
+namespace Lcb.BLL.MediatR.GetPostcard.GetUserPostcard;
 
 public class GetUserPostcardRequest : IRequest<GetUserPostcardResponse>
 {

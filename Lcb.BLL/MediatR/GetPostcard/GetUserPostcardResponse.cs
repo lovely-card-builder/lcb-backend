@@ -1,4 +1,4 @@
-namespace Lcb.BLL.MediatR.GetUserPosrcards;
+namespace Lcb.BLL.MediatR.GetPostcard;
 
 public class GetUserPostcardResponse
 {

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Lcb.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Template.DAL.Models;

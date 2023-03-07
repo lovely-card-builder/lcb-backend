@@ -1,11 +1,14 @@
-using Espa.BLL.Validator;
+using System.Text;
 using FluentValidation;
 using Lcb.BLL;
-using Lcb.BLL.Validator;
+using Lcb.Infrastructure;
+using Lcb.Infrastructure.Configs;
 using Lcb.Web.Middlewares;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Template.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -32,6 +35,9 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 builder.Logging.AddSerilog(dispose: true);
 
 
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
+
+
 builder.Services.AddCors();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -51,8 +57,26 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDb(builder.Configuration);
 builder.Services.AddBLL();
 
-builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+builder.Services.AddAuthentication(o =>
+{
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+        ValidAudience = builder.Configuration["JwtConfig:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey
+            (Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"])),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
 // ---
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
-using Lcb.BLL.MediatR.AddUserPostcard;
 using Lcb.BLL.MediatR.CreatePostcard;
-using Lcb.BLL.MediatR.GetUserPosrcards;
+using Lcb.Web.Auth;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lcb.Web.Controllers;
@@ -16,20 +16,21 @@ public class PostcardController : LcbController
     }
 
     [HttpPost]
-    public async Task<ICollection<GetUserPostcardResponse>> GetAll([FromBody] GetUserPostcardsRequest request, CancellationToken ct)
-    {
-        return await _mediator.Send(request, ct);
-    }
-
-    [HttpPost]
-    public async Task<Unit> GetById([FromBody] AddUserPostcardRequest request, CancellationToken ct)
-    {
-        return await _mediator.Send(request, ct);
-    }
-
-    [HttpPost]
+    [Authorize]
+    [AllowAnonymous]
     public async Task<Guid> Create([FromBody] CreatePostcard.Command command, CancellationToken ct)
     {
+        var userId = User.TryGetId();
+        command.UserId = userId;
+        return await _mediator.Send(command, ct);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<Guid> GetMy([FromBody] CreatePostcard.Command command, CancellationToken ct)
+    {
+        var userId = User.TryGetId();
+        command.UserId = userId;
         return await _mediator.Send(command, ct);
     }
 }

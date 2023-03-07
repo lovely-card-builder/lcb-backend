@@ -1,4 +1,4 @@
-﻿namespace Template.Infrastructure;
+﻿namespace Lcb.Infrastructure.Repositories;
 
 public interface IRepository<T>
     where T : class

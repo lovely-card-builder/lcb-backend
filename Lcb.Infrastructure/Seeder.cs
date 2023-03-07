@@ -1,4 +1,4 @@
-﻿namespace Template.Infrastructure;
+﻿namespace Lcb.Infrastructure;
 
 public class Seeder
 {

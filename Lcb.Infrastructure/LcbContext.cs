@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Template.DAL.Models;
 
-namespace Template.Infrastructure;
+namespace Lcb.Infrastructure;
 
 public class LcbContext : DbContext
 {

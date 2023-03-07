@@ -1,10 +1,10 @@
 using AutoMapper;
+using Lcb.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Template.DAL.Models;
-using Template.Infrastructure;
 
-namespace Lcb.BLL.MediatR.GetUserPosrcards;
+namespace Lcb.BLL.MediatR.GetPostcard.GetUserPosrcards;
 
 public class GetUserPostcardsRequestHandler : IRequestHandler<GetUserPostcardsRequest, ICollection<GetUserPostcardResponse>>
 {
