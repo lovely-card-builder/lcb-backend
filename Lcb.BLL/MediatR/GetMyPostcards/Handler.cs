@@ -25,6 +25,7 @@ public static partial class GetMyPostcards
             var postcards = await _repository
                 .GetAll()
                 .Where(x => x.UserId == command.UserId)
+                .Include(x => x.Images.OrderBy(y => y.Order))
                 .ToListAsync(cancellationToken: cancellationToken);
 
             var mapped = _mapper.Map<ICollection<Response>>(postcards);

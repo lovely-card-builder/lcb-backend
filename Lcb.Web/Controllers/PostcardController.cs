@@ -36,7 +36,7 @@ public class PostcardController : LcbController
     }
 
     [HttpGet]
-    [Route("[controller]/{id:guid}")]
+    [Route("~/[controller]/{id:guid}")]
     public async Task<ActionResult<GetPostcard.Response>> Get(Guid id, CancellationToken ct)
     {
         return Ok(await _mediator.Send(new GetPostcard.Command(id), ct));
