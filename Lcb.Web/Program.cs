@@ -3,6 +3,7 @@ using FluentValidation;
 using Lcb.BLL;
 using Lcb.Infrastructure;
 using Lcb.Infrastructure.Configs;
+using Lcb.Web.Auth;
 using Lcb.Web.Middlewares;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,8 +36,9 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 builder.Logging.AddSerilog(dispose: true);
 
 
+builder.Services.Configure<StaticConfig>(builder.Configuration.GetSection(nameof(StaticConfig)));
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
-
+builder.Services.AddSingleton<AuthoriserService>();
 
 builder.Services.AddCors();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -46,11 +48,42 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddSwaggerGen(options =>
 {
     options.EnableAnnotations();
+    options.CustomSchemaIds(type => type.FullName.Replace("+", "."));
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
         Title = "LCB API",
         Description = "LCB API"
+    });
+    
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+
+            },
+            new List<string>()
+        }
     });
 });
 
@@ -117,6 +150,9 @@ app.UseCors(policyBuilder =>
 app.UseMiddleware<ExceptionCatcherMiddleware>();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
