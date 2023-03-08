@@ -5,7 +5,7 @@ namespace Lcb.BLL.MediatR.GetMyPostcards;
 
 public static partial class GetMyPostcards
 {
-    public class Command : IRequest<ICollection<Postcard>>
+    public class Command : IRequest<ICollection<Response>>
     {
         public Guid? UserId { get; set; }
 

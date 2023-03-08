@@ -1,5 +1,6 @@
 using Lcb.BLL.MediatR.CreatePostcard;
 using Lcb.BLL.MediatR.GetMyPostcards;
+using Lcb.BLL.MediatR.GetPostcard;
 using Lcb.Web.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -33,5 +34,12 @@ public class PostcardController : LcbController
     {
         var userId = User.TryGetId();
         return Ok(await _mediator.Send(new GetMyPostcards.Command(userId), ct));
+    }
+
+    [HttpGet]
+    [Route("[controller]/{id:guid}")]
+    public async Task<ActionResult<ICollection<Postcard>>> Get(Guid id, CancellationToken ct)
+    {
+        return Ok(await _mediator.Send(new GetPostcard.Command(id), ct));
     }
 }
