@@ -1,6 +1,4 @@
-using Lcb.BLL;
-
-namespace Services
+namespace Lcb.BLL.Misc
 {
     public static class ObjectExtensions
     {

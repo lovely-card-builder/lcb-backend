@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Template.DAL.Models;
+using Lcb.DAL.Models;
 
 namespace Lcb.BLL.MediatR.GetMyPostcards;
 

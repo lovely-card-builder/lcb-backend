@@ -1,6 +1,6 @@
-using Template.DAL.Misc;
+using Lcb.DAL.Misc;
 
-namespace Template.DAL.Models;
+namespace Lcb.DAL.Models;
 
 public class Postcard : IdEntity
 {

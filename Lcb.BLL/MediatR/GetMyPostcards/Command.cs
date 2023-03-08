@@ -1,5 +1,4 @@
 using MediatR;
-using Template.DAL.Models;
 
 namespace Lcb.BLL.MediatR.GetMyPostcards;
 

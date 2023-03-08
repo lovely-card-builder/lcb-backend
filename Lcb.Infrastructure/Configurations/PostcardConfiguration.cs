@@ -1,6 +1,6 @@
+using Lcb.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Template.DAL.Models;
 
 namespace Lcb.Infrastructure.Configurations;
 

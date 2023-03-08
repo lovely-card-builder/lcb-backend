@@ -1,8 +1,8 @@
 using AutoMapper;
+using Lcb.DAL.Models;
 using Lcb.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Template.DAL.Models;
 using Template.Infrastructure;
 
 namespace Lcb.BLL.MediatR.GetMyPostcards;

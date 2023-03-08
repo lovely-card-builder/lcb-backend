@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
+using Lcb.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Template.DAL.Models;
 
 namespace Lcb.Infrastructure;
 
