@@ -9,8 +9,8 @@ public static partial class GetPostcard
     {
         public Mapping()
         {
-            CreateMap<Postcard, Response>()
-                .ForMember(dst => dst.Images, cfg => cfg.MapFrom(src => src.Images.Select(x => x.FileName)));
+            CreateMap<Postcard, Response>();
+            CreateMap<PostcardImage, ResponseImage>();
         }
     }
 }

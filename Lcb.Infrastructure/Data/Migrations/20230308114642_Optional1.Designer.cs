@@ -3,17 +3,19 @@ using System;
 using Lcb.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Template.Infrastructure.Data.Migrations
+namespace Lcb.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LcbContext))]
-    partial class LcbContextModelSnapshot : ModelSnapshot
+    [Migration("20230308114642_Optional1")]
+    partial class Optional1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,10 +67,6 @@ namespace Template.Infrastructure.Data.Migrations
 
                     b.Property<Guid>("PostcardId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

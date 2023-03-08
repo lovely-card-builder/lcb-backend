@@ -9,8 +9,9 @@ public static partial class CreatePostcard
     {
         public Mapping()
         {
-            CreateMap<Command, Postcard>()
-                .ForMember(dst => dst.Images, cfg => cfg.MapFrom(src => src.Images.Select((x, i) => new PostcardImage() {FileName = x, Order = i})));
+            CreateMap<Command, Postcard>();
+            
+            CreateMap<CommandImage, PostcardImage>();
         }
     }
 }

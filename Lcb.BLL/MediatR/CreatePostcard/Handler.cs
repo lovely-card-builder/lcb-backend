@@ -24,6 +24,8 @@ public static partial class CreatePostcard
         {
             var postcard = _mapper.Map<Postcard>(command);
 
+            var _ = postcard.Images.Select((x, i) => x.Order = i);
+
             await _repository.Add(postcard);
 
             return postcard.Id;

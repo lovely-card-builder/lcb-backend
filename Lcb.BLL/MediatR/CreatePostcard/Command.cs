@@ -15,6 +15,12 @@ public static partial class CreatePostcard
 
         public string? WishText { get; set; }
 
-        public ICollection<string> Images { get; set; }
+        public ICollection<CommandImage> Images { get; set; }
+    }
+
+    public class CommandImage
+    {
+        public string FileName { get; set; }
+        public string Title { get; set; }
     }
 }

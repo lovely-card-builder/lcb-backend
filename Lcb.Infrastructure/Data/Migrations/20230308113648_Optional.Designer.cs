@@ -3,17 +3,19 @@ using System;
 using Lcb.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Template.Infrastructure.Data.Migrations
+namespace Lcb.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(LcbContext))]
-    partial class LcbContextModelSnapshot : ModelSnapshot
+    [Migration("20230308113648_Optional")]
+    partial class Optional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,7 @@ namespace Template.Infrastructure.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<string>("WishFrom")
@@ -66,10 +69,6 @@ namespace Template.Infrastructure.Data.Migrations
                     b.Property<Guid>("PostcardId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PostcardId");
@@ -100,7 +99,9 @@ namespace Template.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Lcb.DAL.Models.User", "User")
                         .WithMany("Postcards")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -109,9 +110,7 @@ namespace Template.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Lcb.DAL.Models.Postcard", "Postcard")
                         .WithMany("Images")
-                        .HasForeignKey("PostcardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PostcardId");
 
                     b.Navigation("Postcard");
                 });

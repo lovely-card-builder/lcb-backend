@@ -14,6 +14,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .HasMany(x => x.Postcards)
             .WithOne(x => x.User)
-            .HasForeignKey(x => x.UserId);
+            .HasForeignKey(x => x.UserId)
+            .IsRequired(false);
     }
 }
