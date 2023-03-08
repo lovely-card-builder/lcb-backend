@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Options;
+using Services;
 
 namespace Lcb.Web.Controllers;
 
@@ -24,7 +25,7 @@ public class FilesController : LcbController
     [HttpPost]
     public async Task<ActionResult<string>> UploadImage(IFormFile image)
     {
-        // image.EnsureNotNullHandled("image is missing");
+        image.EnsureNotNullHandled("image is missing");
 
         await using var ms = new MemoryStream();
         await image.CopyToAsync(ms);
@@ -50,7 +51,7 @@ public class FilesController : LcbController
     
     private static readonly FileExtensionContentTypeProvider FileExtensionContentTypeProvider = new();
 
-    [HttpGet]
+    [HttpGet("{name}")]
     public FileStreamResult Get([Required] string name)
     {
         var folderPath = Path.Combine(_staticConfig.Value.StaticFilesPath, UserUploadsFolder);
