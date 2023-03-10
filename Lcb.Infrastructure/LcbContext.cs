@@ -1,13 +1,18 @@
 ﻿using System.Reflection;
+using Lcb.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Template.Infrastructure;
+namespace Lcb.Infrastructure;
 
 public class LcbContext : DbContext
 {
     public LcbContext()
     {
     }
+    
+    public DbSet<User> Users { get; set; }
+    
+    public DbSet<Postcard> Postcards { get; set; }
 
     public LcbContext(DbContextOptions<LcbContext> options) : base(options)
     {

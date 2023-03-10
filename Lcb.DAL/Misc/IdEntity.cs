@@ -1,4 +1,4 @@
-﻿namespace Template.DAL.Misc;
+﻿namespace Lcb.DAL.Misc;
 
 public abstract class IdEntity
 {

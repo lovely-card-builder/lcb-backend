@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Template.Infrastructure;
+namespace Lcb.Infrastructure.Repositories;
 
 public class RepositoryBase<T> : IRepository<T>
     where T : class
@@ -12,10 +12,12 @@ public class RepositoryBase<T> : IRepository<T>
         _context = context;
     }
 
-    private DbSet<T> GetSet()
+    private  DbSet<T> GetSet()
     {
         return _context.Set<T>();
     }
+
+    
 
     public IQueryable<T> GetAll()
     {
@@ -73,6 +75,11 @@ public class RepositoryBase<T> : IRepository<T>
         
         dbSet.Remove(entity);
 
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SaveChanges(T entity)
+    {
         await _context.SaveChangesAsync();
     }
 }

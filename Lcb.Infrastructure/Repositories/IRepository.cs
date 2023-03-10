@@ -1,4 +1,4 @@
-﻿namespace Template.Infrastructure;
+﻿namespace Lcb.Infrastructure.Repositories;
 
 public interface IRepository<T>
     where T : class
@@ -16,4 +16,5 @@ public interface IRepository<T>
     Task Delete(IEnumerable<T> entities);
 
     Task Delete(T entity);
+    Task SaveChanges(T entity);
 }
